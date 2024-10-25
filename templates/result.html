@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Detector - Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Detection Result</h1>
+        <div class="result {% if email_type == 'spam' %}spam{% else %}ham{% endif %}">
+            {% if email_type == 'spam' %} <img class="spam-icon" src="/static/caution-mark-svgrepo-com.svg">
+            {% else %} <img class="ham-icon" src="/static/icons8-tick.svg">
+            {% endif %}
+            <p>The email content is detected as {{ email_type.upper() }}.</p>
+        </div>
+        <a href="/" class="button"><button style="margin-top: 10px;">Check Another Email</button></a>
+    </div>
+</body>
+
+</html>
