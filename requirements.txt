@@ -1,0 +1,8 @@
+Flask
+nltk
+uuid
+pandas
+numpy
+scikit-learn
+
+NOTE: Make a virtual environment before installing requirements to avoid conflicts 
