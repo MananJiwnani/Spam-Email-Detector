@@ -11,6 +11,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from nltk.tokenize import sent_tokenize
 from nltk.stem import PorterStemmer
 nltk.download('punkt_tab')
 nltk.download('stopwords')
@@ -86,3 +87,34 @@ def train_data():
     # accuracy = 0.9769230769230769
 
     return svc, tfidf_vectorizer
+
+
+def training(email, svc, tfidf_vectorizer):
+    email_converted = tfidf_vectorizer.transform([email])
+    result = svc.predict(email_converted)
+    if(result[0]==1):
+        return "spam"
+    else:
+        return "ham"
+
+
+def preprocess_email_content(email_content):
+    sentences = sent_tokenize(email_content)
+
+    processed_sentences = []
+    for sentence in sentences:
+        words = word_tokenize(email_content)
+        processed_sentences.append(words)
+
+    stop_words = set(stopwords.words('english'))
+    stemmer = PorterStemmer()
+
+    stemmed_sentences = []
+    for sentence in processed_sentences:
+        sentence = [word.lower() for word in sentence if word.isalpha()]
+        sentence = [word for word in sentence if word not in stop_words]
+        stemmed_sentence = [stemmer.stem(word) for word in sentence]
+
+        stemmed_sentences.append(''.join(stemmed_sentence))
+
+    return ','.join(stemmed_sentences)
